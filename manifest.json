@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "TicketPlus搶票機器人",
+  "version": "3.0",
+  "description": "TicketPlus自動搶票擴充功能",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "contentSettings"
+  ],
+  "host_permissions": [
+    "https://ticketplus.com.tw/*"
+  ],
+  "icons": {
+    "16": "mao6.png",
+    "48": "mao6.png",
+    "128": "mao6.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "搶票機器人設定",
+    "default_icon": "mao6.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ticketplus.com.tw/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

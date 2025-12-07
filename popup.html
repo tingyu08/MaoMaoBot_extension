@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搶票機器人</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        body {
+            font-family: 'Share Tech Mono', 'Microsoft JhengHei', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            width: 380px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            padding: 15px;
+            border-bottom: 1px solid #004d00;
+            background: #050505;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ffff;
+            margin: 0 0 8px 0;
+        }
+
+        .status-text {
+            font-size: 11px;
+            color: #888;
+        }
+
+        #statusLabel {
+            color: #00ff00;
+        }
+
+        .content {
+            padding: 15px;
+        }
+
+        .input-group {
+            border: 1px solid #333;
+            padding: 10px;
+            background: rgba(20, 20, 20, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .input-label {
+            font-size: 11px;
+            color: #888;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .tech-input {
+            width: 100%;
+            background: #111;
+            border: 1px solid #444;
+            color: #00ffff;
+            padding: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .tech-input:focus {
+            border-color: #00ff00;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+        }
+
+        .row-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .row-item {
+            flex: 1;
+        }
+
+        .toggle-btn {
+            border: 1px solid #333;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            user-select: none;
+            background: rgba(20, 20, 20, 0.5);
+            color: #666;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .toggle-btn.active {
+            border-color: #00ffff;
+            color: #00ffff;
+            background-color: rgba(0, 255, 255, 0.08);
+        }
+
+        .footer {
+            padding: 15px;
+            border-top: 1px solid #333;
+            background: #050505;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-main {
+            background: #000;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-main:hover {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .btn-stop {
+            border-color: #ff0055;
+            color: #ff0055;
+        }
+
+        .btn-stop:hover {
+            background: #ff0055;
+            color: #fff;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 class="title">>> 搶票機器人</h1>
+        <div class="status-text">狀態: <span id="statusLabel">待機中</span></div>
+    </div>
+
+    <div class="content">
+        <div class="input-group">
+            <label class="input-label">目標網址</label>
+            <input type="text" id="targetUrl" class="tech-input" placeholder="https://ticketplus.com.tw/order/...">
+        </div>
+
+        <div class="row-group">
+            <div class="input-group row-item">
+                <label class="input-label">帳號 (手機)</label>
+                <input type="text" id="account" class="tech-input" placeholder="0912..." autocomplete="off">
+            </div>
+            <div class="input-group row-item">
+                <label class="input-label">密碼</label>
+                <input type="password" id="password" class="tech-input" placeholder="****" autocomplete="new-password">
+            </div>
+        </div>
+
+        <div class="row-group">
+            <div class="input-group row-item">
+                <label class="input-label">張數</label>
+                <select id="ticketCount" class="tech-input">
+                    <option value="1">1 張</option>
+                    <option value="2">2 張</option>
+                    <option value="3">3 張</option>
+                    <option value="4">4 張</option>
+                </select>
+            </div>
+            <div class="input-group row-item">
+                <label class="input-label">優先票價</label>
+                <input type="number" id="priorityPrice" class="tech-input" placeholder="例如: 3200">
+            </div>
+        </div>
+
+        <div id="grabAllBtn" class="toggle-btn">全區掃描模式 (點擊開啟)</div>
+
+        <div class="input-group">
+            <label class="input-label">目標票價 (空格或逗號分隔)</label>
+            <input type="text" id="priceString" class="tech-input" placeholder="例如: 2800, 3200">
+        </div>
+    </div>
+
+    <div class="footer">
+        <button id="btnStart" class="btn-main">執行搶票</button>
+        <button id="btnStop" class="btn-main btn-stop">停止程式</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
